@@ -1,0 +1,7 @@
+const SHOW_SLIDES = {
+  MORE_THAN_1200PX: 8,
+  ENTRY_1000_1200: 4,
+  ENTRY_800_1000: 3,
+}
+
+export default SHOW_SLIDES;
