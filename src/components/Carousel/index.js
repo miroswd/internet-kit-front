@@ -12,13 +12,24 @@ import { CarouselButton } from "../Buttons/CarouselButton";
 
 
 export const Carousel = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [rowsSheets, setrowsSheets] = useState([])
-  const [widthPage, setWidthPage] = useState(0)
+  const [widthPage, setWidthPage] = useState(window.innerWidth)
+
+  const [numberOfSlides, setNumberOfSlides] = useState(slidesByWidthPage(widthPage));
+
+  useEffect(() => {
+    setWidthPage(window.innerWidth);
+    window.addEventListener('resize', () => {
+      setWidthPage(window.innerWidth);
+      setNumberOfSlides(slidesByWidthPage(window.innerWidth))
+    });
+  }, [])
+
+
   const [change,] = useState({})
 
   const [dataRange, setDataRange] = useState({})
-  const numberOfSlides = slidesByWidthPage(widthPage)
 
 
   const [reRender, setReRender] = useState(0)
@@ -28,31 +39,20 @@ export const Carousel = () => {
     const valueDataRange = parseInt(getDataRange)
     setDataRange(Object.assign(dataRange, { [`dataRange_${page}`]: valueDataRange }))
     // const rowLen = rowsSheets.length > 0 ? rowsSheets.filter(row => row.title === page).length[0].data.length : 0
-    console.log({ numberOfSlides, valueDataRange, rowLen })
     if (next && numberOfSlides + (rowLen - valueDataRange) <= rowLen) {
       // setChange({ [page]: Math.random() })
       setReRender(Math.random())
     } else {
-      console.log("else")
       setReRender(Math.random())
 
       // setChange({ [page]: Math.random() })
     }
   }, [dataRange, numberOfSlides])
 
-  useEffect(() => {
-    setWidthPage(window.innerWidth);
-    window.addEventListener('resize', () => {
-      setWidthPage(window.innerWidth);
-    });
-  }, [])
 
 
   useEffect(() => {
-
     const getDataRange = sessionStorage.getItem('dataRange')
-
-
 
     PAGES.forEach(page => {
       if (!getDataRange || parseInt(getDataRange) <= 0) {
@@ -66,7 +66,7 @@ export const Carousel = () => {
     // setDataRange({ dataRange: parseInt(getDataRange) })
 
     const loadData = async () => {
-      setLoading(true)
+      setLoading(false)
       const pages = [];
       for (let page of PAGES) {
         const { data } = await apiConnection.get(`/rows/${page}`)

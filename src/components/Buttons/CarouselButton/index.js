@@ -14,8 +14,6 @@ import { Button } from './style'
 export const CarouselButton = ({ direction, page, numberOfSlides, rowsLength }) => {
   const [initialSlide, setInitialSlide] = useState(0)
 
-
-
   const leftControlHandle = useCallback((e) => {
     const carousel = document.getElementById(page)
 
