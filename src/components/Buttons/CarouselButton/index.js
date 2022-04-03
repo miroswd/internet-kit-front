@@ -16,11 +16,6 @@ export const CarouselButton = ({ direction, page, numberOfSlides, rowsLength }) 
 
 
 
-  // console.log('IXE, TO CEGO', {
-  //   page, numberOfSlides, rowsLength, carousel
-  // })
-
-
   const leftControlHandle = useCallback((e) => {
     const carousel = document.getElementById(page)
 
@@ -46,7 +41,7 @@ export const CarouselButton = ({ direction, page, numberOfSlides, rowsLength }) 
   }, [page, numberOfSlides, initialSlide, rowsLength])
 
   return (
-    <Button onClick={direction === 'left' ? leftControlHandle : rightControlHandle} isLeft={direction === 'left'}>
+    <Button onClick={direction === 'left' ? leftControlHandle : rightControlHandle} isLeft={direction === 'left'} >
       {direction === 'left' ? (
         <BiLeftArrow />
       ) : (
