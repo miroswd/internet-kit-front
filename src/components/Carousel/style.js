@@ -4,11 +4,12 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   margin-top: 20px;  
-`
+ ;
+  `
 
 export const Cards = styled.div`
   margin-top: 32px;
-  
+  /* margin-left: 80px; */
   width:  78vw;
   display: flex;
   align-items: flex-start;
@@ -42,5 +43,8 @@ export const RowCarousel = styled.div`
   margin-bottom: 40px;
 `
 
-
+export const SpaceMissingButton = styled.div`
+  margin-left: 50px;
+  
+`
 

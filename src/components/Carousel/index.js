@@ -6,7 +6,7 @@ import { PageSheets } from "../PageSheets";
 
 import { CardVideo } from "../CardVideo";
 
-import { Container, CarouselContent, Cards, RowCarousel } from './style'
+import { Container, CarouselContent, Cards, RowCarousel, SpaceMissingButton } from './style'
 import { CarouselButton } from "../Buttons/CarouselButton";
 
 
@@ -15,11 +15,13 @@ export const Carousel = () => {
   const [loading, setLoading] = useState(false)
   const [rowsSheets, setrowsSheets] = useState([])
   const [widthPage, setWidthPage] = useState(0)
-  const [change, setChange] = useState({})
+  const [change,] = useState({})
 
   const [dataRange, setDataRange] = useState({})
   const numberOfSlides = slidesByWidthPage(widthPage)
 
+
+  const [reRender, setReRender] = useState(0)
 
   const dataRangePageHandle = useCallback((page, rowLen, next = true) => {
     const getDataRange = sessionStorage.getItem(`dataRange_${page}`)
@@ -27,7 +29,15 @@ export const Carousel = () => {
     setDataRange(Object.assign(dataRange, { [`dataRange_${page}`]: valueDataRange }))
     // const rowLen = rowsSheets.length > 0 ? rowsSheets.filter(row => row.title === page).length[0].data.length : 0
     console.log({ numberOfSlides, valueDataRange, rowLen })
-    next ? numberOfSlides + (rowLen - valueDataRange) <= rowLen && setChange({ [page]: Math.random() }) : setChange({ [page]: Math.random() })
+    if (next && numberOfSlides + (rowLen - valueDataRange) <= rowLen) {
+      // setChange({ [page]: Math.random() })
+      setReRender(Math.random())
+    } else {
+      console.log("else")
+      setReRender(Math.random())
+
+      // setChange({ [page]: Math.random() })
+    }
   }, [dataRange, numberOfSlides])
 
   useEffect(() => {
@@ -83,8 +93,9 @@ export const Carousel = () => {
             <RowCarousel key={rowSheet.title}>
               <PageSheets title={rowSheet.title} />
               <CarouselContent >
-                {dataRange[`dataRange_${rowSheet.title}`] && (
-                  <button onClick={() => dataRangePageHandle(rowSheet.title, rowSheet.data.length, false)}  >
+
+                {
+                  !!dataRange[`dataRange_${rowSheet.title}`] ? (<button onClick={() => dataRangePageHandle(rowSheet.title, rowSheet.data.length, false)} style={{ zIndex: 0, cursor: 'default' }}>
                     <CarouselButton
                       direction="left"
                       numberOfSlides={numberOfSlides}
@@ -92,10 +103,13 @@ export const Carousel = () => {
                       rowsLength={rowSheet.data.length}
                       key={rowSheet.title}
                     />
-                  </button>
-                )}
+                  </button>)
+                    : <SpaceMissingButton />
+                }
 
-                <Cards key={change[rowSheet.title]} id={rowSheet.title}>
+
+
+                <Cards key={change[rowSheet.title] === 'MUSIC' && reRender} id={rowSheet.title}>
                   {rowSheet.data.slice(dataRange[`dataRange_${rowSheet.title}`], numberOfSlides + dataRange[`dataRange_${rowSheet.title}`]).map(row => (
                     <CardVideo row={row} />
                   ))
@@ -103,9 +117,6 @@ export const Carousel = () => {
                 </Cards>
                 {rowSheet.data.length > numberOfSlides + dataRange[`dataRange_${rowSheet.title}`] && (
                   <button onClick={() => dataRangePageHandle(rowSheet.title, rowSheet.data.length)} >
-                    {
-                      console.log("NUMBER OF SLIDES >>>", numberOfSlides, rowSheet.title, rowSheet.data.length)
-                    }
                     <CarouselButton
                       direction="right"
                       numberOfSlides={numberOfSlides}
@@ -115,6 +126,7 @@ export const Carousel = () => {
                     />
                   </button>
                 )}
+
               </CarouselContent>
             </RowCarousel>
           ))}

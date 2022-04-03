@@ -3,9 +3,6 @@ import React from 'react'
 import { Container, TitleVideo, Video } from './style'
 
 export const CardVideo = ({ row: { id, title, url } }) => {
-  console.log({
-    veSePode: title
-  })
   return (
     <Container key={id}>
       <Video
