@@ -57,7 +57,6 @@ export const CarouselVideos = ({ rowsSheets, numberOfSlides, page }) => {
           }
         },]}
     >
-      {console.log(rowsSheets.slice(initialSlide, initialSlide + numberOfSlides))}
       {
         rowsSheets.length > 0 && rowsSheets.slice(initialSlide, initialSlide + numberOfSlides).map(row =>
           <CardVideo key={row.id} row={row} />
