@@ -4,9 +4,10 @@ import styled from 'styled-components';
 
 
 export const Container = styled.h2`
-  width: 19%;
-  height: 88px;
+  width: 320px;
+  height: 108px;
   margin-left: 48px;
+
 
   display: flex;
   justify-content: space-between;
