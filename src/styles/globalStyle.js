@@ -37,7 +37,7 @@ ul .BrainhubCarousel__track .BrainhubCarousel__track--transition {
      box-shadow:inset 0 0 3px rgba(0,0,0,0.2)
     }
     ::-webkit-scrollbar-thumb {
-      background:#ccc;
+      background:#F8932250;
       height:10px;
     }
     /* Remove as setinhas do input numérico */
