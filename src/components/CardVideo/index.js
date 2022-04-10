@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import { Container, TitleVideo, Video } from './style'
 
@@ -12,7 +12,9 @@ export const CardVideo = ({ row: { id, title, url } }) => {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       />
-      <TitleVideo>{title}</TitleVideo>
+      <a href={url} target='_blank' rel="noreferrer" >
+        <TitleVideo>{title}</TitleVideo>
+      </a>
     </Container>
   )
 }
